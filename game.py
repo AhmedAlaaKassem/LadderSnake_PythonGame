@@ -1,5 +1,7 @@
 from tkinter import *
+from PIL import ImageTk, Image
 import time
+#modified in centos
 
 STEP = 50
 MARGIN = 8
@@ -12,7 +14,7 @@ Dicefiles = ["null","./data/play1.png","./data/play2.png",
 
 def display_dice(dice_no,operation):
     if operation == "Create":
-        dice = PhotoImage(file= Dicefiles[dice_no])
+        dice = ImageTk.PhotoImage(file= Dicefiles[dice_no])
         diceimage = canvas.create_image(560, 150, anchor=NW, image=dice)
         canvas.image = dice
 
@@ -171,10 +173,10 @@ c.place(x=560, y=100)
 
 
 # Loads and create image (put the image in the folder)
-bg = PhotoImage(file="./data/pic.png")
+bg = ImageTk.PhotoImage(file="./data/pic.png")
 background = canvas.create_image(50, 0, anchor=NW, image=bg)
 
-img = PhotoImage(file="./data/player.png")
+img = ImageTk.PhotoImage(file="./data/player.png")
 image = canvas.create_image(MARGIN + START_X, MARGIN + START_Y, anchor=NW, image=img)
 
 
