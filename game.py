@@ -22,7 +22,10 @@ def display_dice(dice_no,operation):
         canvas.delete(diceimage)
 
 def reset():
-        canvas.move(image, STEP , 0)
+	#Player1.player_shift(Player1.check_position())
+	shiftplayer2(Player1.check_position())
+	
+        #canvas.move(image, STEP , 0)
 
 
 def moveitem(dir):
@@ -32,7 +35,9 @@ def moveitem(dir):
         canvas.move(image, -STEP, 0)
     elif dir == "Up":
         canvas.move(image, 0, -STEP)
-    root.update()
+    elif dir == "Down":
+    	canvas.move(image, 0, STEP)
+    
 
 def moveplayer(steps):
     for x in  range(steps):
@@ -43,16 +48,60 @@ def moveplayer(steps):
                             or Player1.check_position() >= 81 and Player1.check_position() <= 89 :
             moveitem("Right")
             Player1.player_step(1)
-            time.sleep(.2)
+            root.update()
+            time.sleep(.3)
 
         elif Player1.check_position() % 10 == 0 :
             moveitem("Up")
             Player1.player_step(1)
-            time.sleep(.2)
+            root.update()
+            time.sleep(.3)
         else :
             moveitem("Left")
             Player1.player_step(1)
-            time.sleep(.2)
+            root.update()
+            time.sleep(.3)
+
+def shiftplayer(steps):
+    for x in  range(steps):
+        if Player1.check_position() >= 0 and Player1.check_position() <= 9 \
+                or Player1.check_position() >= 21 and Player1.check_position() <= 29 \
+                    or Player1.check_position() >= 41 and Player1.check_position() <= 49 \
+                        or Player1.check_position() >= 61 and Player1.check_position() <= 69 \
+                            or Player1.check_position() >= 81 and Player1.check_position() <= 89 :
+            Player1.player_step(1)
+            moveitem("Right")
+            
+
+        elif Player1.check_position() % 10 == 0 :
+            Player1.player_step(1)
+            moveitem("Up")
+            
+
+        else :
+            Player1.player_step(1)
+            moveitem("Left")
+            
+
+
+def shiftplayer2(steps):
+    for x in  range(steps):
+        if Player1.check_position() >= 0 and Player1.check_position() <= 10 \
+                or Player1.check_position() >= 22 and Player1.check_position() <= 30 \
+                    or Player1.check_position() >= 42 and Player1.check_position() <= 50 \
+                        or Player1.check_position() >= 62 and Player1.check_position() <= 70 \
+                            or Player1.check_position() >= 82 and Player1.check_position() <= 90 :
+            moveitem("Left")
+            Player1.player_step(-1)
+
+        elif (Player1.check_position()-1) % 10 == 0 :
+            moveitem("Down")
+            Player1.player_step(-1)
+
+        else :
+            moveitem("Right")
+            Player1.player_step(-1)
+
 
 
 
@@ -69,7 +118,11 @@ def jumb():
     for element in ladders_snakes:
         if Player1.check_position() == element.check_obj():
             if (Player1.check_position() - element.get_end_point() ) < 0 :
-                moveplayer(element.get_end_point() - Player1.check_position())
+                shiftplayer(element.get_end_point() - Player1.check_position())
+            else:
+            	shiftplayer2(Player1.check_position() - element.get_end_point())
+
+
                 #Player1.player_shift(element.get_end_point())
 
 
@@ -79,7 +132,7 @@ def jumb():
     print(f"your position after checking ladders/snakes : {Player1.check_position()}")
     if Player1.check_position() >= 100:
         print("Player1 Win >>>")
-        Player1.player_shift(0)
+        reset()
 
 
 def move(event):
@@ -184,7 +237,7 @@ image = canvas.create_image(MARGIN + START_X, MARGIN + START_Y, anchor=NW, image
 
 
 # This bind window to keys so that move is called when you press a key
-root.bind("<Key>", move)
+#root.bind("<Key>", move)
 
 
 # Init system
