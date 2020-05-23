@@ -135,16 +135,7 @@ def jumb():
         reset()
 
 
-def move(event):
-    """Move the sprite image with a d w and s when click them"""
-    if event.char == "a":
-        canvas.move(image, -STEP, 0)
-    elif event.char == "d":
-        canvas.move(image, STEP, 0)
-    elif event.char == "w":
-        canvas.move(image, 0, -STEP)
-    elif event.char == "s":
-        canvas.move(image, 0, STEP)
+
 
 
 class Player:
@@ -202,28 +193,19 @@ class Ladder_Snake_Obj:
 
 # Create the window with the Tk class
 root = Tk()
-
-
+root.title("Ladders Snakes Game")
+root.resizable(0,0)
 
 # Create the canvas and make it visible with pack()
 canvas = Canvas(root, width=730, height=500)
 canvas.pack()  # this makes it visible
 
-
-
-welcomelable = Label(root, text="Welcome to SnakeLadder Game", font='Helvetica 18 bold')
-#welcomelable.place(x=0, y=0)
-
-buttondice = Button(root, text='Exit Game', bd='10', command=root.destroy)
-buttondice.place(x=560, y=400)
-
-b = Button(text="    Play     ", bd='10', command=jumb)
-b.place(x=560, y=50)
-
-c = Button(text="    Reset     ", bd='10', command=reset)
-c.place(x=560, y=100)
-
-
+a = Button(text="Exit Game",height = '1', width = '15',bd='4', command=root.destroy)
+a.place(x=575, y=400)
+b = Button(text="Play",height = '1', width = '15',bd='4', command=jumb)
+b.place(x=575, y=50)
+c = Button(text="Reset",height = '1', width = '15',bd='4', command=reset)
+c.place(x=575, y=100)
 
 # Loads and create image (put the image in the folder)
 bg = ImageTk.PhotoImage(file="./data/pic.png")
@@ -231,13 +213,6 @@ background = canvas.create_image(50, 0, anchor=NW, image=bg)
 
 img = ImageTk.PhotoImage(file="./data/player.png")
 image = canvas.create_image(MARGIN + START_X, MARGIN + START_Y, anchor=NW, image=img)
-
-
-
-
-
-# This bind window to keys so that move is called when you press a key
-#root.bind("<Key>", move)
 
 
 # Init system
